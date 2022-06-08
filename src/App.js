@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import AddData from "./AddData";
 import Todo from "./Todo";
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [done, setDone] = useState(true);
+  const [user, setUser] = useState({});
 
   const getTodos = async () => {
     try {
@@ -18,14 +20,22 @@ const App = () => {
       console.log(err);
     }
   };
+
   const handleCallback = (response) => {
-    console.log(response.credentials);
+    setUser(jwtDecode(response.credential));
+    document.getElementById('google-signin-button').style.display = 'none';
+    document.getElementById('logout').style.display = 'block';
   };
+  const handleSignOut = () => {
+    setUser({});
+    document.getElementById('google-signin-button').style.display = 'block';
+    document.getElementById('logout').style.display = 'none';
+  }
   useEffect(() => {
     /* global google */
-    
+
     google.accounts.id.initialize({
-      client_id: "1085962425992-gqnur8r1mh407fn0fei27p6dnee35br5.apps.googleusercontent.com",
+      client_id: "56554755902-mvevp5s61je9q9hmu2au95oq2rbksnq0.apps.googleusercontent.com",
       callback: handleCallback,
     });
 
@@ -42,9 +52,14 @@ const App = () => {
 
   const addData = async (newTodo) => {
     try {
+      if(!user.email){
+        throw new Error('Please Login to add Todo');
+      }
+      newTodo.Email = user.email;
       await axios.post("https://todo460.herokuapp.com/api/", newTodo);
       getTodos();
     } catch (err) {
+      window.alert(err);
       console.log(err);
     }
   };
@@ -87,11 +102,15 @@ const App = () => {
         <div>
           <div className="flex justify-content-center">
             <div>
-              <div id="google-signin-button">
-
-              </div>
+              <div id="google-signin-button"></div>
+              {user.email&&<button type="button" className="btn btn-default btn-sm" id="logout" onClick={() => { handleSignOut() }}>
+                <span className="glyphicon glyphicon-log-out"></span> Log out
+              </button>}
               <div className="p-5 mx-auto">
-                <h3>Add Your Task</h3>
+                <div className="card-w">
+                  <center><h3>Hello {user.given_name} !</h3></center>
+                </div>
+                <h5>Add Your Task</h5>
                 <AddData addData={addData} />
                 <div className="test">
                   <button
@@ -114,7 +133,7 @@ const App = () => {
                 {done
                   ? todos.map(
                     (todo, index) =>
-                      !todo.Completed && (
+                      !todo.Completed && todo.Email === user.email && (
                         <Todo
                           key={index}
                           id={todo.id}
@@ -129,7 +148,7 @@ const App = () => {
                   )
                   : todos.map(
                     (todo, index) =>
-                      todo.Completed && (
+                      todo.Completed && todo.Email === user.email && (
                         <Todo
                           key={index}
                           id={todo.id}

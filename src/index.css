@@ -17,3 +17,8 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
+#logout{
+  width: fit-content;
+  font-size: 1.5rem;
+  color: salmon;
+}
