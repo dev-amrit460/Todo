@@ -19,6 +19,9 @@ body::-webkit-scrollbar {
 }
 #logout{
   width: fit-content;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: salmon;
+  margin-left:  10px;
+  border: 1px solid salmon;
+  background-color: rgb(238, 246, 248);
 }

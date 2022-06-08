@@ -104,7 +104,7 @@ const App = () => {
             <div>
               <div id="google-signin-button"></div>
               {user.email&&<button type="button" className="btn btn-default btn-sm" id="logout" onClick={() => { handleSignOut() }}>
-                <span className="glyphicon glyphicon-log-out"></span> Log out
+                 Log out 
               </button>}
               <div className="p-5 mx-auto">
                 <div className="card-w">
