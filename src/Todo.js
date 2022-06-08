@@ -3,41 +3,42 @@ import { Form, Button, Modal } from "react-bootstrap";
 
 const Todo = ({
   id,
-  title,
-  detail,
-  lastDate,
+  Title,
+  Description,
+  Date,
   completeTodo,
   editTodo,
   deleteTodo,
 }) => {
   const [show, setShow] = useState(false);
 
-  const [newTitle, setTitle] = useState(title);
-  const [newDetail, setDetail] = useState(detail);
-  const [newlastDate, setLastDate] = useState(lastDate);
+  const [newTitle, setTitle] = useState(Title);
+  const [newDescription, setDescription] = useState(Description);
+  const [newlastDate, setLastDate] = useState(Date);
+  // console.log(newlastDate);
 
   const handleClose = () => {
     setShow(false);
-    setTitle(title);
-    setDetail(detail);
-    setLastDate(lastDate);
+    setTitle(Title);
+    setDescription(Description);
+    setLastDate(Date);
   };
 
   const handleShow = () => setShow(true);
 
-  const editTodoHandler = (title, detail, lastDate) => {
+  const editTodoHandler = (Title, Description, Date) => {
     handleClose();
     const todo = {
       id,
-      title,
-      detail,
-      lastDate,
+      Title,
+      Description,
+      Date,
     };
 
     editTodo(todo);
-    setTitle(title);
-    setDetail(detail);
-    setLastDate(lastDate);
+    setTitle(Title);
+    setDescription(Description);
+    setLastDate(Date);
   };
 
   return (
@@ -63,9 +64,9 @@ const Todo = ({
 
         <div className="p-2">
           <br />
-          <h5>{title}</h5>
-          <p>{detail}</p>
-          <p>{`Last date : ${lastDate}`}</p>
+          <h5>{Title}</h5>
+          <p>{Description}</p>
+          <p>{`Last date : ${Date}`}</p>
         </div>
 
         <div className="twobtn">
@@ -98,12 +99,12 @@ const Todo = ({
               />
             </Form.Group>
 
-            <Form.Group controlId="detail">
-              <Form.Label>Detail</Form.Label>
+            <Form.Group controlId="Description">
+              <Form.Label>Description</Form.Label>
               <Form.Control
                 type="text"
-                value={newDetail}
-                onChange={(e) => setDetail(e.target.value)}
+                value={newDescription}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </Form.Group>
             <Form.Group controlId="lastDate">
@@ -122,7 +123,7 @@ const Todo = ({
           </Button>
           <Button
             variant="primary"
-            onClick={() => editTodoHandler(newTitle, newDetail)}
+            onClick={() => editTodoHandler(newTitle, newDescription, newlastDate)}
           >
             Save Changes
           </Button>
