@@ -1,7 +1,13 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).<br>
+<b><ul>
+<li>Google Authentication</li>
+<li>Backend - Django</li>
+</ul></b>
+<b>Link: https://todo-django-460.netlify.app/</b>
+<br>
+<br>
 ## Available Scripts
 
 In the project directory, you can run:
